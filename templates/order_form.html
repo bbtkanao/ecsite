@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>注文フォーム</title>
+</head>
+<body>
+  <table>
+    <tr>
+      <th>商品コード</th><th>商品名</th><th>価格</th><th>数量</th>
+    </tr>
+    {% for item in cart_item_list %}
+    <tr>
+      <td>{{ item.item_code }}</td>
+      <td>{{ item.item_name }}</td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.buy_num }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <form action="{% url 'order_form' %}" method="post">
+    {% csrf_token %}
+    名前: {{ form.name }} <br>
+    住所: {{ form.address }} <br>
+    メールアドレス: {{ form.email }} <br>
+    <input type="submit" value="この内容で注文">
+  </form>
+</body>
+</html>

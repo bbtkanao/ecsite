@@ -162,3 +162,9 @@ LOGGING = {
         },
     }
 }
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'myaddress@gmail.com'
+EMAIL_HOST_PASSWORD = "mypassword"
+EMAIL_PORT = 587

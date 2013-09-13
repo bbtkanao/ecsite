@@ -7,3 +7,8 @@ class ItemSearchForm(forms.Form):
 class CartForm(forms.Form):
     item_id = forms.IntegerField()
     buy_num = forms.IntegerField()
+
+class OrderForm(forms.Form):
+    name = forms.CharField()
+    address = forms.CharField()
+    email = forms.EmailField()

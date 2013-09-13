@@ -16,8 +16,10 @@ def item_page_display(request, item_id):
     return HttpResponse(html)
 """
 from django.shortcuts import get_object_or_404, render, redirect
-from itempage.models import Item
-from itempage.forms import ItemSearchForm, CartForm
+from django.core.mail import send_mail
+from django.template import loader
+from itempage.models import Item, OrderItem, Order
+from itempage.forms import ItemSearchForm, CartForm, OrderForm
 from itempage.cart import CartItem
 
 def item_page_display(request, item_id):
@@ -52,3 +54,27 @@ def add_to_cart(request):
 def cart_display(request):
     cart_item_list = request.session.get('cart_item_list', [])
     return render(request, 'cart.html', {'cart_item_list': cart_item_list})
+
+def order_form(request):
+    cart_item_list = request.session.get('cart_item_list', [])
+    form = OrderForm(request.POST or None)
+    if form.is_valid():
+        order = Order.objects.create(
+            name =form.cleaned_data['name'],
+            address=form.cleaned_data['address'],
+            email=form.cleaned_data['email']
+            )
+        for item in cart_item_list:
+            order_item = OrderItem.objects.create(
+                item_code=item.item_code,
+                item_name=item.item_name,
+                price=item.price,
+                buy_num=item.buy_num,
+                order=order
+                )
+        del request.session['cart_item_list']
+        mail_body = loader.render_to_string('order_mail.txt',
+                                            {'order': order, 'cart_item_list': cart_item_list})
+        send_mail(u'注文完了', mail_body, 'no-reply@example.com', [order.email])
+        return redirect('complete')
+    return render(request, 'order_form.html', {'form': form, 'cart_item_list': cart_item_list})

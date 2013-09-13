@@ -1,0 +1,7 @@
+{{ order.name }} 様
+
+以下の注文を受け付けました。
+{% for item in cart_item_list %}
+{{ item.item_code }} {{ item.name }}
+価格: {{ item.price}}  数量: {{ item.buy_num }}
+{% endfor %}

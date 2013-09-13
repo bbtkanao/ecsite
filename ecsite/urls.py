@@ -5,6 +5,7 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+                       url(r'^item/(?P<item_id>\d+)/$', 'itempage.views.item_page_display'),
     # Examples:
     # url(r'^$', 'ecsite.views.home', name='home'),
     # url(r'^ecsite/', include('ecsite.foo.urls')),

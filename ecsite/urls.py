@@ -7,6 +7,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
                        url(r'^item/(?P<item_id>\d+)/$', 'itempage.views.item_page_display'),
                        url(r'^admin/', include(admin.site.urls)),
+                       url(r'^item_search$', 'itempage.views.item_search', name='item_search'),
+                       url(r'^add_to_cart$', 'itempage.views.add_to_cart', name='add_to_cart'),
+                       url(r'^cart$', 'itempage.views.cart_display', name='cart_display'),
     # Examples:
     # url(r'^$', 'ecsite.views.home', name='home'),
     # url(r'^ecsite/', include('ecsite.foo.urls')),

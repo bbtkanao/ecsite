@@ -16,5 +16,11 @@
       <th>価格</th><td>{{ item.price }}</td>
     </tr>
   </table>
+  <form action="{% url 'add_to_cart' %}" method="post">
+    {% csrf_token %}
+    {{ form.item_id.as_hidden }}
+    数量: {{ form.buy_num }}
+    <input type="submit" value="ショッピングカートに入れる">
+  </form>
 </body>
 </html>
